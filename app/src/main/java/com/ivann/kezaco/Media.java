@@ -4,30 +4,31 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Media implements Parcelable {
 
-    private final String media;
-    private final String theme;
-    private final String [] answer;
+    public final String media;
+    public final String theme;
+    public final ArrayList<Answer> answers;
 
-    public Media(String media, String theme, String[] answer) {
+    public Media(String media, String theme, ArrayList<Answer> answers) {
         this.media = media;
         this.theme = theme;
-        this.answer = answer;
+        this.answers = answers;
     }
 
     protected Media(Parcel in) {
         media = in.readString();
         theme = in.readString();
-        answer = in.createStringArray();
+        answers = in.createTypedArrayList(Answer.CREATOR);
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(media);
         dest.writeString(theme);
-        dest.writeStringArray(answer);
+        dest.writeTypedList(answers);
     }
 
     @Override

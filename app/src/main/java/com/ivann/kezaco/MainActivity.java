@@ -59,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         });
 
-                /*findViewById(R.id.buttonAbout).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.buttonAbout).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         goToAbout();
                     }
                 });
+                /*
                 findViewById(R.id.buttonChooseQuizz).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
