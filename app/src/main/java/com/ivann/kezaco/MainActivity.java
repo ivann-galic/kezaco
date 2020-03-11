@@ -12,20 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     String[] listItems;
 
@@ -103,20 +90,24 @@ String media = jsonObject.getString("media");
 
             }
         });
+
+//        Button buttonAbout =  findViewById(R.id.buttonAbout);
+//        buttonAbout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                goToAbout();
+//            }
+//        });
+
+        findViewById(R.id.buttonAbout).setOnClickListener(this);
     }
 
 
 
     private void goToAbout() {
-                final Intent intentAbout = new Intent(this, AboutActivity.class);
-                Button buttonAbout = findViewById(R.id.buttonAbout);
-                buttonAbout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(intentAbout);
-                    }
-                });
-            }
+        final Intent intentAbout = new Intent(this, AboutActivity.class);
+        startActivity(intentAbout);
+    }
 
             private void goToQuizz() {
                 final Intent intentQuizz = new Intent(this, QuizzActivity.class);
@@ -129,4 +120,15 @@ String media = jsonObject.getString("media");
                     }
                 });
             }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonAbout:
+                goToAbout();
+                break;
         }
+    }
+}
