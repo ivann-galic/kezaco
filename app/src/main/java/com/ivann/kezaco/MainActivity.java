@@ -14,15 +14,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-    final Intent intent = new Intent(this, AboutActivity.class);
-    Button buttonAbout =  findViewById(R.id.buttonAbout);
-        buttonAbout.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.buttonAbout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(intent);
+                goToAbout();
+            }
+        });
+
+        findViewById(R.id.buttonChooseQuizz).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToQuizz();
             }
         });
     }
 
+    private void goToAbout() {
+        final Intent intentAbout = new Intent(this, AboutActivity.class);
+        Button buttonAbout =  findViewById(R.id.buttonAbout);
+        buttonAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intentAbout);
+            }
+        });
+    }
+
+    private void goToQuizz() {
+        final Intent intentQuizz = new Intent(this, QuizzActivity.class);
+        Button buttonAbout =  findViewById(R.id.buttonChooseQuizz);
+        buttonAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intentQuizz);
+            }
+        });
+    }
 }
