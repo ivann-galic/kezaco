@@ -47,4 +47,13 @@ public class Media implements Parcelable {
             return new Media[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Media{" +
+                "media='" + media + '\'' +
+                ", theme='" + theme + '\'' +
+                ", answers=" + answers +
+                '}';
+    }
 }

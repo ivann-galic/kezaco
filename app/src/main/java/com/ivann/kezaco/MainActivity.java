@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                 AlertDialog mDialog = mBuilder.create();
                                                 mDialog.show();
                                             }
-                                        });
+                                         });
 
                 findViewById(R.id.buttonAbout).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -98,14 +99,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String body = response.body().string();
                 //Log.i("MainActivity","response=" + body);
                 try {
+
                     JSONArray jsonArray = new JSONArray(body);
+                   int random = (int)Math.floor(Math.random() * 3);
+                    String medi = jsonArray.getJSONObject(random).getString("media");
+                    String theme = jsonArray.getJSONObject(random).getString("theme");
+                    JSONArray answer = jsonArray.getJSONObject(random).getJSONArray("answers");
+                    ArrayList<Answer> answerList = new  ArrayList<Answer> ();
+                    for(int i = 0; i < answer.length(); i++){
+                       Answer answer1 = new Answer( answer.getJSONObject(i).getString("sentence"),answer.getJSONObject(i).getString("is_right").equals("true"));
+                        Log.i("MainActivity","onResponse:" + "alors? =" + answer.getJSONObject(i).getString("sentence"));
+                        Log.i("MainActivity", "onResponse" + "finalement" + answer1.toString());
+                        answerList.add(answer1);
+
+                    }
+
+                    Media media = new Media(medi,theme,answerList);
+
+                    Log.i("MainActivity","blablabla" + media.toString());
+                    Log.i("MainActivity","onResponse:" + "le media =" + medi);
+                    Log.i("MainActivity","onResponse:" + "le theme=" + theme);
+                    Log.i("MainActivity","onResponse:" + "les réponses sont =" + answer);
+
+                   Log.i("MainActivity","onResponse:" + "random =" + random);
+
+
+                    Log.i("MainActivity", "onResponse: " + "test"+jsonArray.getJSONObject(2));
+
                     for(int i = 0;i < jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-String media = jsonObject.getString("media");
-                        Log.i("MainActivity", "onResponse: " + media);
+//String media = jsonObject.getString("media");
+//String theme = jsonObject.getString("theme");
+
+                        Log.i("MainActivity", "onResponse: " + medi);
+                        Log.i("MainActivity", "onResponse: " + theme);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    e.getMessage();
                 }
 
 
@@ -131,7 +162,7 @@ String media = jsonObject.getString("media");
                 break;
 
             case 1:
-                theme = "image";
+                theme = "picture";
                 break;
             case 2:
                 theme = "shadow";

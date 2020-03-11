@@ -38,5 +38,14 @@ class Answer implements Parcelable {
         public Answer[] newArray(int size) {
             return new Answer[size];
         }
+
     };
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "sentence='" + sentence + '\'' +
+                ", isGoodAnswer=" + isGoodAnswer +
+                '}';
+    }
 }
