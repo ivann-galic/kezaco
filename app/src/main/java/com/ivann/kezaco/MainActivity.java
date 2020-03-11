@@ -9,8 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         listItems = getResources().getStringArray(R.array.shopping_item);
 
-        getQuizzFromApi();
+
 
         Button choiceButton = (Button) findViewById(R.id.buttonChooseQuizz);
 //        final TextView mResult = (TextView) findViewById(R.id.tvResult);
@@ -49,6 +48,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
 //                        mResult.setText(listItems[i]);
+                                                        ListView lw = ((AlertDialog)dialogInterface).getListView();
+                                                        int checkedItemPosition = lw.getCheckedItemPosition();
+                                                        Log.i("MainActivity", "onClick: " + checkedItemPosition);
+
+                                                        getQuizzFromApi(checkedItemPosition);
+
                                                         dialogInterface.dismiss();
                                                     }
                                                 });
@@ -74,10 +79,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });*/
             }
 
-    private void getQuizzFromApi() {
+    private void getQuizzFromApi(int userChoice) {
+
+
+        String url = urlFromUserChoice(userChoice);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://gryt.tech:8080/kezacos/?theme=sound")
+                .url(url)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -115,6 +123,26 @@ String media = jsonObject.getString("media");
         findViewById(R.id.buttonAbout).setOnClickListener(this);
     }
 
+    private String urlFromUserChoice(int userChoice) {
+        String theme;
+        switch (userChoice){
+            case 0:
+                theme = "sound";
+                break;
+
+            case 1:
+                theme = "image";
+                break;
+            case 2:
+                theme = "shadow";
+                break;
+
+            default:
+                theme = "sound";
+                break;
+        }
+        return "http://gryt.tech:8080/kezacos/?theme="+ theme;
+    }
 
 
     private void goToAbout() {
