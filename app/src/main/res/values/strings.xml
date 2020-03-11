@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Kezaco</string>
-</resources>
+
+        <string name="app_name">SingleChoiceDialog</string>
+
+        <string-array name="shopping_item">
+            <item>12 - 24 mois</item>
+            <item>24 - 36 mois</item>
+            <item> 36 mois +</item>
+        </string-array>
+    </resources>
