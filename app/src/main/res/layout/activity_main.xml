@@ -25,6 +25,7 @@
         android:layout_marginTop="70dp"
         android:backgroundTint="#b2ebf2"
         android:text="A propos"
+        android:drawableLeft="@drawable/ic_info_outline_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonChooseQuizz" />

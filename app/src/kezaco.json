@@ -1,6 +1,6 @@
 [
   {
-    "media": "dolphin.jpg",
+    "media": "dolphin.png",
     "theme": "picture",
     "answers": [
       {
@@ -18,7 +18,7 @@
     ]
   },
   {
-    "media": "rabbit.jpg",
+    "media": "rabbit.png",
     "theme": "picture",
     "answers": [
       {
@@ -36,7 +36,7 @@
     ]
   },
   {
-    "media": "tortoise.jpg",
+    "media": "tortoise.png",
     "theme": "picture",
     "answers": [
       {
@@ -54,7 +54,7 @@
     ]
   },
   {
-    "media": "bat_shadow.jpg",
+    "media": "bat_shadow.png",
     "theme": "shadow",
     "answers": [
       {
@@ -72,7 +72,7 @@
     ]
   },
   {
-    "media": "hen_shadow.jpg",
+    "media": "hen_shadow.png",
     "theme": "shadow",
     "answers": [
       {
@@ -90,7 +90,7 @@
     ]
   },
   {
-    "media": "elephant_shadow.jpg",
+    "media": "elephant_shadow.png",
     "theme": "shadow",
     "answers": [
       {
@@ -108,55 +108,55 @@
     ]
   },
   {
-    "media": "dv.jpg",
+    "media": "cow_sound.mp3",
     "theme": "Sound",
     "answers": [
       {
-        "sentence": "14%",
+        "sentence": "Poule",
         "is_right": true
       },
       {
-        "sentence": "20%",
+        "sentence": "Grenouille",
         "is_right": false
       },
       {
-        "sentence": "18%",
+        "sentence": "Pigeon",
         "is_right": false
       }
     ]
   },
   {
-  "media": "dv.jpg",
+  "media": "dog_sound.mp3",
   "theme": "Sound",
   "answers": [
     {
-      "sentence": "14%",
-      "is_right": true
-    },
-    {
-      "sentence": "20%",
+      "sentence": "Chat",
       "is_right": false
     },
     {
-      "sentence": "18%",
+      "sentence": "Chien",
+      "is_right": true
+    },
+    {
+      "sentence": "Cheval",
       "is_right": false
     }
   ]
   },
   {
-  "media": "dv.jpg",
+  "media": "duck_sound.mp3",
   "theme": "Sound",
   "answers": [
     {
-      "sentence": "14%",
+      "sentence": "Canard",
       "is_right": true
     },
     {
-      "sentence": "20%",
+      "sentence": "Cochon",
       "is_right": false
     },
     {
-      "sentence": "18%",
+      "sentence": "Hibou",
       "is_right": false
     }
   ]
