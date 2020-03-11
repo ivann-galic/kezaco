@@ -14,8 +14,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String[] listItems;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,16 +107,13 @@ String media = jsonObject.getString("media");
         startActivity(intentAbout);
     }
 
-            private void goToQuizz() {
-                final Intent intentQuizz = new Intent(this, QuizzActivity.class);
-                Button buttonAbout = findViewById(R.id.buttonChooseQuizz);
-                buttonAbout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(intentQuizz);
-
-                    }
-                });
+    private void goToQuizz() {
+        final Intent intentQuizz = new Intent(this, QuizzActivity.class);
+        Button buttonAbout =  findViewById(R.id.buttonChooseQuizz);
+        buttonAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intentQuizz);
             }
         });
     }
