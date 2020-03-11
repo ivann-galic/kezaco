@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -36,49 +38,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         listItems = getResources().getStringArray(R.array.shopping_item);
 
-
-
         Button choiceButton = (Button) findViewById(R.id.buttonChooseQuizz);
-//        final TextView mResult = (TextView) findViewById(R.id.tvResult);
+//      final TextView mResult = (TextView) findViewById(R.id.tvResult);
         choiceButton.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-                                                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                                                mBuilder.setTitle("Quel est l'âge de votre enfant?");
-                                                mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        mResult.setText(listItems[i]);
-                                                        ListView lw = ((AlertDialog)dialogInterface).getListView();
-                                                        int checkedItemPosition = lw.getCheckedItemPosition();
-                                                        Log.i("MainActivity", "onClick: " + checkedItemPosition);
 
-                                                        getQuizzFromApi(checkedItemPosition);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        mBuilder.setTitle("Quel est l'âge de votre enfant?");
+        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+//      mResult.setText(listItems[i]);
+        ListView lw = ((AlertDialog)dialogInterface).getListView();
+        int checkedItemPosition = lw.getCheckedItemPosition();
+        Log.i("MainActivity", "onClick: " + checkedItemPosition);
+        getQuizzFromApi(checkedItemPosition);
+        dialogInterface.dismiss();
+             }
+               });
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+            }
+        });
 
-                                                        dialogInterface.dismiss();
-                                                    }
-                                                });
+        findViewById(R.id.buttonAbout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToAbout();
 
-
-                                                AlertDialog mDialog = mBuilder.create();
-                                                mDialog.show();
-                                            }
-                                         });
-
-                findViewById(R.id.buttonAbout).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        goToAbout();
                     }
                 });
-                /*
-                findViewById(R.id.buttonChooseQuizz).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        goToQuizz();
-                    }
-                });*/
-            }
+
+        RadioGroup group = (RadioGroup) findViewById(R.id.radioGroupQuest);
+        RadioButton button;
+
+        for(int i = 0; i < 3; i++) {
+            button = new RadioButton(this);
+            button.setText("Button " + i);
+            group.addView(button);
+        }
+    }
 
     private void getQuizzFromApi(int userChoice) {
 
@@ -128,28 +128,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     for(int i = 0;i < jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-//String media = jsonObject.getString("media");
-//String theme = jsonObject.getString("theme");
+                        
 
                         Log.i("MainActivity", "onResponse: " + medi);
                         Log.i("MainActivity", "onResponse: " + theme);
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     e.getMessage();
                 }
-
-
             }
         });
-
-//        Button buttonAbout =  findViewById(R.id.buttonAbout);
-//        buttonAbout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                goToAbout();
-//            }
-//        });
 
         findViewById(R.id.buttonAbout).setOnClickListener(this);
     }
