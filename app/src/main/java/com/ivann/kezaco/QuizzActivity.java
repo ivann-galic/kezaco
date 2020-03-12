@@ -31,6 +31,7 @@ public class QuizzActivity extends AppCompatActivity {
         ArrayList medias = srcIntent.getParcelableArrayListExtra("list");
         final ImageView imageViewAnimal = findViewById(R.id.imageViewAnimal);
         final Button buttonSound = findViewById(R.id.buttonSound);
+        final TextView textViewGoodSentence = findViewById(R.id.textViewGoodSentence);
         int index = 0;
         assert medias != null;
         Log.i("QuizzActivity", "recupére" + medias.get(index));
@@ -108,6 +109,7 @@ public class QuizzActivity extends AppCompatActivity {
                     TextViewResultTurn.setText("Bonne réponse");
                 } else {
                     TextViewResultTurn.setText("Mauvaise réponsee");
+                    textViewGoodSentence.setText("La bonne réponse était : " + goodAnswer);
                 }
 
                 buttonValidNext.setText("Question suivante");
