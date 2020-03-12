@@ -7,24 +7,6 @@
     android:background="@drawable/background"
     tools:context=".QuizzActivity">
 
-    <Button
-        android:id="@+id/buttonValidNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="582dp" />
-
-    <TextView
-        android:id="@+id/textViewResultTurn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardQuestion" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardQuestion"
         android:layout_width="312dp"
@@ -92,5 +74,56 @@
 
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardSentences"
+        android:layout_width="312dp"
+        android:layout_height="188dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardQuestion"><![CDATA[>
+        ]]>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"><![CDATA[>
+
+
+            ]]>
+
+            <TextView
+                android:id="@+id/textViewResultTurn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="52dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Bonne réponse" />
+
+            <TextView
+                android:id="@+id/textViewGoodSentence"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:layout_marginTop="37dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewResultTurn"
+                tools:text='La bonne réponse était : "chien"' />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/buttonValidNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:text="Valider la réponse"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
