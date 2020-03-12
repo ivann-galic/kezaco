@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -41,24 +42,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button choiceButton = (Button) findViewById(R.id.buttonChooseQuizz);
 //      final TextView mResult = (TextView) findViewById(R.id.tvResult);
         choiceButton.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-        mBuilder.setTitle("Quel est l'âge de votre enfant?");
-        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View view) {
+
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                mBuilder.setTitle("Quel est l'âge de votre enfant?");
+                mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 //      mResult.setText(listItems[i]);
-        ListView lw = ((AlertDialog)dialogInterface).getListView();
-        int checkedItemPosition = lw.getCheckedItemPosition();
-        Log.i("MainActivity", "onClick: " + checkedItemPosition);
-        getQuizzFromApi(checkedItemPosition);
-        dialogInterface.dismiss();
-             }
-               });
-        AlertDialog mDialog = mBuilder.create();
-        mDialog.show();
+                        ListView lw = ((AlertDialog) dialogInterface).getListView();
+                        int checkedItemPosition = lw.getCheckedItemPosition();
+                        Log.i("MainActivity", "onClick: " + checkedItemPosition);
+                        getQuizzFromApi(checkedItemPosition);
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
             }
         });
 
@@ -67,16 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 goToAbout();
 
-                    }
-                });
-
-
-
-      /*  for(int i = 0; i < 3; i++) {
-            button = new RadioButton(this);
-            button.setText("Button " + i);
-            group.addView(button);
-        }*/
+            }
+        });
     }
 
     private void getQuizzFromApi(int userChoice) {
@@ -101,36 +94,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     JSONArray jsonArray = new JSONArray(body);
 
-                    ArrayList randomTab = new ArrayList();
-                    verifyRandom(randomTab);
+                    // Collections.shuffle(jsonArray);
+                    ArrayList<Media> list = new ArrayList<>();
 
-                    String medi = jsonArray.getJSONObject(verifyRandom(randomTab)).getString("media");
-                    String theme = jsonArray.getJSONObject(verifyRandom(randomTab)).getString("theme");
-                    JSONArray answer = jsonArray.getJSONObject(verifyRandom(randomTab)).getJSONArray("answers");
-                    ArrayList<Answer> answerList = new  ArrayList<Answer> ();
-                    for(int i = 0; i < answer.length(); i++){
-                       Answer answer1 = new Answer( answer.getJSONObject(i).getString("sentence"),answer.getJSONObject(i).getString("is_right").equals("true"));
-                        Log.i("MainActivity","onResponse:" + "alors? =" + answer.getJSONObject(i).getString("sentence"));
-                        Log.i("MainActivity", "onResponse" + "finalement" + answer1.toString());
-                        answerList.add(answer1);
+                    int len = jsonArray.length();
+
+                    for (int i = 0; i < len; i++) {
+                        ArrayList<Answer> answerList = new ArrayList<>();
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String mediaAttribute = jsonObject.getString("media");
+                        String theme = jsonObject.getString("theme");
+                        JSONArray answer = jsonObject.getJSONArray("answers");
+                            for (int j = 0; j < answer.length(); j++) {
+                                Log.i("MainActivity", "longueur liste ?" + answer.length());
+
+                                JSONObject answerJSONObject = answer.getJSONObject(j);
+                                Answer answer1 = new Answer(answerJSONObject.getString("sentence"), answerJSONObject.getBoolean("is_right"));
+                                Log.i("MainActivity", "affiche liste ?" + answer1);
+
+                                answerList.add(answer1);
+                            }
+                            list.add(new Media(mediaAttribute, theme, answerList));
 
                     }
-
-                    Media media = new Media(medi,theme,answerList);
+                    Collections.shuffle(list);
                     Intent intent = new Intent(MainActivity.this, QuizzActivity.class);
-                    intent.putExtra("media", media);
+                    intent.putExtra("list", list);
                     startActivity(intent);
 
 
 
-                    for(int i = 0;i < jsonArray.length();i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        
-
-                        Log.i("MainActivity", "onResponse: " + medi);
-                        Log.i("MainActivity", "onResponse: " + theme);
-
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     e.getMessage();
@@ -142,30 +135,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     *
      * @param randomTab
      * @return
      */
     private int verifyRandom(ArrayList randomTab) {
         int random;
-        if (randomTab.isEmpty()){
-             random = (int)Math.floor(Math.random() * 3);
-             randomTab.add(random);
+        if (randomTab.isEmpty()) {
+            random = (int) Math.floor(Math.random() * 3);
+            randomTab.add(random);
         }
         do {
-            random = (int)Math.floor(Math.random() * 3);
+            random = (int) Math.floor(Math.random() * 3);
 
-        } while(randomTab.contains(random));
+        } while (randomTab.contains(random));
         return random;
     }
 
     private String urlFromUserChoice(int userChoice) {
         String theme;
-        switch (userChoice){
+        switch (userChoice) {
             case 0:
                 theme = "sound";
                 break;
-
             case 1:
                 theme = "picture";
                 break;
@@ -178,9 +169,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 theme = "sound";
                 break;
         }
-        return "http://gryt.tech:8080/kezacos/?theme="+ theme;
+        return "http://gryt.tech:8080/kezacos/?theme=" + theme;
     }
-
 
     private void goToAbout() {
         final Intent intentAbout = new Intent(this, AboutActivity.class);
