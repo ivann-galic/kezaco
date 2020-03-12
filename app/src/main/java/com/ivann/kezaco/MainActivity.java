@@ -70,14 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
 
-        RadioGroup group = (RadioGroup) findViewById(R.id.radioGroupQuest);
-        RadioButton button;
 
-        for(int i = 0; i < 3; i++) {
+
+      /*  for(int i = 0; i < 3; i++) {
             button = new RadioButton(this);
             button.setText("Button " + i);
             group.addView(button);
-        }
+        }*/
     }
 
     private void getQuizzFromApi(int userChoice) {
@@ -101,10 +100,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 try {
 
                     JSONArray jsonArray = new JSONArray(body);
-                   int random = (int)Math.floor(Math.random() * 3);
-                    String medi = jsonArray.getJSONObject(random).getString("media");
-                    String theme = jsonArray.getJSONObject(random).getString("theme");
-                    JSONArray answer = jsonArray.getJSONObject(random).getJSONArray("answers");
+
+                    ArrayList randomTab = new ArrayList();
+                    verifyRandom(randomTab);
+
+                    String medi = jsonArray.getJSONObject(verifyRandom(randomTab)).getString("media");
+                    String theme = jsonArray.getJSONObject(verifyRandom(randomTab)).getString("theme");
+                    JSONArray answer = jsonArray.getJSONObject(verifyRandom(randomTab)).getJSONArray("answers");
                     ArrayList<Answer> answerList = new  ArrayList<Answer> ();
                     for(int i = 0; i < answer.length(); i++){
                        Answer answer1 = new Answer( answer.getJSONObject(i).getString("sentence"),answer.getJSONObject(i).getString("is_right").equals("true"));
@@ -115,16 +117,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     Media media = new Media(medi,theme,answerList);
-
-                    Log.i("MainActivity","blablabla" + media.toString());
-                    Log.i("MainActivity","onResponse:" + "le media =" + medi);
-                    Log.i("MainActivity","onResponse:" + "le theme=" + theme);
-                    Log.i("MainActivity","onResponse:" + "les réponses sont =" + answer);
-
-                   Log.i("MainActivity","onResponse:" + "random =" + random);
+                    Intent intent = new Intent(MainActivity.this, QuizzActivity.class);
+                    intent.putExtra("media", media);
+                    startActivity(intent);
 
 
-                    Log.i("MainActivity", "onResponse: " + "test"+jsonArray.getJSONObject(2));
 
                     for(int i = 0;i < jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -144,6 +141,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.buttonAbout).setOnClickListener(this);
     }
 
+    /**
+     *
+     * @param randomTab
+     * @return
+     */
+    private int verifyRandom(ArrayList randomTab) {
+        int random;
+        if (randomTab.isEmpty()){
+             random = (int)Math.floor(Math.random() * 3);
+             randomTab.add(random);
+        }
+        do {
+            random = (int)Math.floor(Math.random() * 3);
+
+        } while(randomTab.contains(random));
+        return random;
+    }
+
     private String urlFromUserChoice(int userChoice) {
         String theme;
         switch (userChoice){
@@ -156,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 2:
                 theme = "shadow";
+
                 break;
 
             default:
@@ -173,13 +189,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void goToQuizz() {
         final Intent intentQuizz = new Intent(this, QuizzActivity.class);
-        Button buttonAbout =  findViewById(R.id.buttonChooseQuizz);
-        buttonAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intentQuizz);
-            }
-        });
+        startActivity(intentQuizz);
+
     }
 
     @Override

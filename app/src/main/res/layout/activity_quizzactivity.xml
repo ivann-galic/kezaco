@@ -51,7 +51,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewQuestion" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imageViewAnimal"
                 android:layout_width="132dp"
                 android:layout_height="132dp"
                 android:layout_marginTop="40dp"
@@ -68,7 +68,7 @@
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintTop_toBottomOf="@+id/imageViewAnimal" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
