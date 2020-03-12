@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ public class QuizzActivity extends AppCompatActivity {
         int index = 0;
         assert medias != null;
         Log.i("QuizzActivity","recupére" + medias.get(index));
-       Media media = (Media) medias.get(index);
+       final Media media = (Media) medias.get(index);
        String image = media.media;
 
        String theme = media.theme;
@@ -36,7 +38,7 @@ public class QuizzActivity extends AppCompatActivity {
 
         //medias.get(0);
 
-        RadioGroup group = (RadioGroup) findViewById(R.id.radioGroupQuest);
+        final RadioGroup group = (RadioGroup) findViewById(R.id.radioGroupQuest);
         RadioButton button;
 
         assert image != null;
@@ -53,13 +55,42 @@ public class QuizzActivity extends AppCompatActivity {
             findViewById(R.id.imageViewAnimal).setVisibility(View.INVISIBLE);
         }
 
-
-       assert answer != null;
-        for(Answer item : media.answers) {
+        assert answer != null;
+        for (Answer item : media.answers) {
             RadioButton rb = new RadioButton(QuizzActivity.this);
-            rb.setText( item.sentence);
+            rb.setText(item.sentence);
             radioGroup.addView(rb);
         }
+
+        final Button buttonValidNext = (Button)findViewById(R.id.buttonValidNext);
+        final TextView TextViewResultTurn =(TextView)findViewById(R.id.textViewResultTurn);
+        final TextView textViewResultTurn;
+        final String[] playerChoice = {""};
+
+            String goodAnswer = "";
+            buttonValidNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final RadioButton radio_red = (RadioButton)findViewById(group.getCheckedRadioButtonId());
+
+                String goodAnswer = "";
+                    if(radio_red != null) {
+                        playerChoice[0] = (String) radio_red.getText();
+                    }
+                Log.i("radioRed", "radioRed: " + radio_red);
+                    for (Answer item : media.answers) {
+                        if (item.isGoodAnswer == true) {
+                            goodAnswer = item.sentence;
+                        }
+                    }
+                Log.i("goodAnswer", "onClick: " + goodAnswer);
+                assert goodAnswer != null;
+                if (goodAnswer.equals(playerChoice[0])) {
+
+                        TextViewResultTurn.setText("Bonne réponse");
+                    } else {
+                        TextViewResultTurn.setText("Mauvaise réponsee");
+                    }
 
         //String test = media.media;
       //   int testos = R.drawable.test;
@@ -78,5 +109,7 @@ public class QuizzActivity extends AppCompatActivity {
         // le bouton valider devient question suivante
         //question suivante charge une autre question, différente de celle qu'on vient de faire
 
+    }
+});
     }
 }
