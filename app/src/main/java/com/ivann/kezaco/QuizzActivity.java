@@ -110,11 +110,7 @@ public class QuizzActivity extends AppCompatActivity {
                     TextViewResultTurn.setText("Mauvaise réponsee");
                 }
 
-                //String test = media.media;
-                //   int testos = R.drawable.test;
-                //   ImageView pictureView = findViewById(R.id.imageView3)
-                //  pictureView.setImageResource(flag);
-
+                buttonValidNext.setText("Question suivante");
 
                 // récupérer le fichier JSon
                 //le parser
