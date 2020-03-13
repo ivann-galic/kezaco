@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,8 +11,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardQuestion"
-        android:layout_width="312dp"
-        android:layout_height="395dp"
+        android:layout_width="325dp"
+        android:layout_height="390dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,63 +26,145 @@
             android:layout_height="match_parent"><![CDATA[>
             ]]>
 
-            <TextView
-                android:id="@+id/textViewQuestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:cursorVisible="false"
-                android:textSize="22sp"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Quel est cet animal ?" />
-
             <Button
                 android:id="@+id/buttonSound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:backgroundTint="#007c91"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="#b2ebf2"
                 android:text="Ecouter le cri"
-                android:textColor="#ffffff"
+                android:textColor="#1b1b1b"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewQuestion" />
+                app:layout_constraintTop_toTopOf="@+id/imageViewAnimal" />
 
             <ImageView
                 android:id="@+id/imageViewAnimal"
                 android:layout_width="132dp"
                 android:layout_height="132dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewQuestion"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
                 app:srcCompat="@drawable/dolphin" />
 
             <RadioGroup
                 android:id="@+id/radioGroupQuest"
                 android:layout_width="172dp"
                 android:layout_height="89dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewAnimal" />
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:text="Quel est cet animal ?"
+                android:textColor="#1b1b1b"
+                android:textSize="17sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/imageViewAnimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPaginationQuestion" />
+
+            <TextView
+                android:id="@+id/tvPaginationQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="15dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#1b1b1b"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.482"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardSentences"
+        android:layout_width="325dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardQuestion"><![CDATA[>
+        ]]>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"><![CDATA[>
+
+
+            ]]>
+
+            <TextView
+                android:id="@+id/textViewResultTurn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#007c91"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewGoodSentence"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Bonne réponse" />
+
+            <TextView
+                android:id="@+id/textViewGoodSentence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#1b1b1b"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewResultTurn"
+                tools:text='La bonne réponse était : "chien"' />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonValidNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="582dp" />
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="#007c91"
+        android:text="Valider la réponse"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonNextQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="50dp"
+        android:text="Question suivante"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardSentences" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

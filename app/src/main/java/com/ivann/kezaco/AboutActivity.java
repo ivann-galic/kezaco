@@ -12,8 +12,13 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-
         TextView tv = findViewById(R.id.versionTextView);
         tv.setText(BuildConfig.VERSION_NAME);
+
+        TextView TextViewAboutSpeech = findViewById(R.id.TextViewAboutSpeech);
+        TextViewAboutSpeech.setText("Kezaco est une application créée le 11 mars 2020  par 4 étudiants de la Coding Factory. L'objectif est simple : permettre aux enfants de reconnaître les animaux par différents moyens ludiques");
+
+        TextView textViewCreators = findViewById(R.id.textViewCreators);
+        textViewCreators.setText(" Créateurs : Ivann.G, Romain.D, Hugo.P, Jérémy.G");
     }
 }

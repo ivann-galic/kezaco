@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     Collections.shuffle(list);
                     Intent intent = new Intent(MainActivity.this, QuizzActivity.class);
-                    intent.putExtra("list", list);
+                    intent.putExtra("listOjectJson", list);
                     startActivity(intent);
 
 

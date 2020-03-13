@@ -2,18 +2,34 @@ package com.ivann.kezaco;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class QuizzActivity extends AppCompatActivity {
+public class QuizzActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    private static final String TAG = "QuizzActivity";
+    private int nbOfGoodAnswers;
+    private int counter;
+    private int numQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,22 +37,31 @@ public class QuizzActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_quizzactivity);
         Intent srcIntent = getIntent();
-        ArrayList medias = srcIntent.getParcelableArrayListExtra("list");
-        final ImageView imageViewAnimal = findViewById(R.id.imageViewAnimal);
-        final RadioGroup radioGroup = findViewById(R.id.radioGroupQuest);
-        int index = 0;
-        assert medias != null;
-        Log.i("QuizzActivity","recupére" + medias.get(index));
-       Media media = (Media) medias.get(index);
-       String image = media.media;
+        final ArrayList medias = srcIntent.getParcelableArrayListExtra("listOjectJson");
+        counter = srcIntent.getIntExtra("counter", 0);
+        nbOfGoodAnswers = srcIntent.getIntExtra("nbOfGoodAnswers", 0);
+        numQuestion = counter;
+        Log.i("goodAnswer", "HAHHAHAHAHHAHAH: " + nbOfGoodAnswers);
+        Log.i("goodAnswer", "OHOHOHHOHHHOOHO: " + counter);
+        final int numberQuestions;
+        numberQuestions = medias.size();
 
-       String theme = media.theme;
-       ArrayList answer = media.answers;
+        final ImageView imageViewAnimal = findViewById(R.id.imageViewAnimal);
+        final Button buttonSound = findViewById(R.id.buttonSound);
+        final TextView textViewGoodSentence = findViewById(R.id.textViewGoodSentence);
+
+        int index = counter;
+        assert medias != null;
+
+        final Media media = (Media) medias.get(index);
+        final String image = media.media;
+        final String theme = media.theme;
+        ArrayList answer = media.answers;
 
 
         //medias.get(0);
 
-        RadioGroup group = (RadioGroup) findViewById(R.id.radioGroupQuest);
+        final RadioGroup group = (RadioGroup) findViewById(R.id.radioGroupQuest);
         RadioButton button;
 
         assert image != null;
@@ -48,35 +73,128 @@ public class QuizzActivity extends AppCompatActivity {
         if (media.theme.equals("picture") || media.theme.equals("shadow")) {
             findViewById(R.id.imageViewAnimal).setVisibility(View.VISIBLE);
             findViewById(R.id.buttonSound).setVisibility(View.INVISIBLE);
-        } else if (media.theme.equals("sound")){
+        } else if (media.theme.equals("sound")) {
             findViewById(R.id.buttonSound).setVisibility(View.VISIBLE);
             findViewById(R.id.imageViewAnimal).setVisibility(View.INVISIBLE);
         }
+        TextView tvPaginationQuestion = findViewById(R.id.tvPaginationQuestion);
+        tvPaginationQuestion.setText("QUESTION " + (counter+1) + "/ " + medias.size());
 
+        buttonSound.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String RESOURCE_PATH = ContentResolver.SCHEME_ANDROID_RESOURCE + "://";
+                String sSound = image.substring(0, image.lastIndexOf("."));
+                int idSound = getResources().getIdentifier(sSound, "raw", getPackageName());
+                String pathSound = RESOURCE_PATH + getPackageName() + File.separator + idSound;
+                Uri uriSound = Uri.parse(pathSound);
 
-       assert answer != null;
-        for(Answer item : media.answers) {
+                MediaPlayer mp = new MediaPlayer();
+                mp = MediaPlayer.create(QuizzActivity.this, uriSound);
+                mp.start();
+            }
+        });
+
+        assert answer != null;
+        for (Answer item : media.answers) {
             RadioButton rb = new RadioButton(QuizzActivity.this);
-            rb.setText( item.sentence);
-            radioGroup.addView(rb);
+            rb.setText(item.sentence);
+            group.addView(rb);
         }
 
-        //String test = media.media;
-      //   int testos = R.drawable.test;
-     //   ImageView pictureView = findViewById(R.id.imageView3);
-      //  pictureView.setImageResource(flag);
+        final Button buttonValidNext = (Button) findViewById(R.id.buttonValidNext);
+        final Button buttonNextQuestion = findViewById(R.id.buttonNextQuestion);
+
+        final TextView TextViewResultTurn = (TextView) findViewById(R.id.textViewResultTurn);
+        final TextView textViewResultTurn;
+        final String[] playerChoice = {""};
+
+        String goodAnswer = "";
+        buttonValidNext.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (buttonValidNext.getText().equals("Valider la réponse")) {
+                    final RadioButton radio_red = (RadioButton) findViewById(group.getCheckedRadioButtonId());
+
+                    String goodAnswer = "";
+                    if (radio_red != null) {
+                        playerChoice[0] = (String) radio_red.getText();
+                    }
+                    Log.i("radioRed", "radioRed: " + radio_red);
+                    for (Answer item : media.answers) {
+                        if (item.isGoodAnswer == true) {
+                            goodAnswer = item.sentence;
+                        }
+                    }
+                    Log.i("goodAnswer", "onClick: " + goodAnswer);
+                    assert goodAnswer != null;
+                    if (goodAnswer.equals(playerChoice[0])) {
+
+                        TextViewResultTurn.setText("Bonne réponse");
+                        textViewGoodSentence.setText("Bien joué !");
+
+                        nbOfGoodAnswers = nbOfGoodAnswers + 1;
+                    } else {
+                        TextViewResultTurn.setText("Mauvaise réponsee");
+                        textViewGoodSentence.setText("La bonne réponse était : " + goodAnswer);
+
+                    }
+                    buttonNextQuestion.setVisibility(View.VISIBLE);
+
+                    buttonValidNext.setVisibility(View.INVISIBLE);
+
+                }
+            }
+        });
 
 
-        // récupérer le fichier JSon
-        //le parser
-        // lance une question aléatoire
-        // récupérer le choix de l'utilisateur
-        // comparer le choix de l'utilisateur à la bonne réponse
-        // renvoyer true / false selon le résultat de la comparaison
-        // afficher bonne réponse si c'est true
-        // afficher mauvaise réponse si c'est false et afficher la bonne réponse
-        // le bouton valider devient question suivante
-        //question suivante charge une autre question, différente de celle qu'on vient de faire
+        buttonNextQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (counter < numberQuestions - 1) {
+                    counter += 1;
+//                    Log.i("goodAnswer", "HAHHAHAHAHHAHAH: " + numberQuestions);
+//                    Log.i("goodAnswer", "OHOHOHHOHHHOOHO: " + counter);
+                    final Intent intent = new Intent(QuizzActivity.this, QuizzActivity.class);
+                    intent.putExtra("counter", counter);
+                    intent.putExtra("nbOfGoodAnswers", nbOfGoodAnswers);
+                    intent.putExtra("numberQuestions", medias.size());
+                    intent.putParcelableArrayListExtra("listOjectJson", medias);
+                    startActivity(intent);
+                    finish();
+                } else if (counter == numberQuestions - 1) {
+                   Log.i("goodAnswer", "EDEDEDEDDEDEDE: " + numberQuestions);
+                  Log.i("goodAnswer", "YDYDDYYDDYDYDYD: " + counter);
+                    final Intent intent = new Intent(QuizzActivity.this, PageResults.class);
+                    intent.putExtra("counter", counter);
+                    intent.putExtra("numberQuestions", medias.size());
+                    intent.putExtra("nbOfGoodAnswers", nbOfGoodAnswers);
+                    intent.putParcelableArrayListExtra("listOjectJson", medias);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+    }
 
+    @Override
+    public void onClick(View v) {
+        Log.d(TAG, " Name " + ((RadioButton) v).getText() + " Id is " + v.getId());
     }
 }
+
+
+// récupérer le fichier JSon
+//le parser
+// lance une question aléatoire
+// récupérer le choix de l'utilisateur
+// comparer le choix de l'utilisateur à la bonne réponse
+// renvoyer true / false selon le résultat de la comparaison
+// afficher bonne réponse si c'est true
+// afficher mauvaise réponse si c'est false et afficher la bonne réponse
+// le bouton valider devient question suivante
+//question suivante charge une autre question, différente de celle qu'on vient de faire
+
+
+
+

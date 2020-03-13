@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:text="1.0"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#1b1b1b"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
@@ -35,20 +36,22 @@
         android:layout_marginStart="92dp"
         android:text="Version :"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#1b1b1b"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textViewCreators"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:text="Créateur : Ivann.G, Romain.D, Hugo.P, Jérémy.G"
-        android:textSize="18sp"
+        android:textColor="#1b1b1b"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        tools:text="texte" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -61,20 +64,25 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardViewAbout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/TextViewAboutSpeech"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:foregroundGravity="center"
                 android:gravity="center"
-                android:text="Kezaco est une application créée le 11 mars 2020  par 4 étudiants de la Coding Factory. L'objectif est simple, permettre aux enfants d'apprendre facilement le nom des animaux"
+                android:textColor="#1b1b1b"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="texte" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
