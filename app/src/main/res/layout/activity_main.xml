@@ -11,7 +11,7 @@
         android:id="@+id/buttonChooseQuizz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:backgroundTint="#b2ebf2"
         android:text="Découvrir les animaux !"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,12 +22,13 @@
         android:id="@+id/buttonAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#b2ebf2"
         android:text="A propos"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonChooseQuizz" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonRecycle" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -38,4 +39,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo2" />
+
+    <Button
+        android:id="@+id/buttonRecycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#b2ebf2"
+        android:text="Afficher la liste des questions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonChooseQuizz" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.ivann.kezaco;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
@@ -8,6 +9,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -59,6 +61,23 @@ public class QuizzActivity extends AppCompatActivity implements View.OnClickList
         final RadioGroup group = (RadioGroup) findViewById(R.id.radioGroupQuest);
         RadioButton button;
 
+        //Creation d'une alertBox pour afficher l'image en grand
+
+        final ImageView imageViewAnimalBox = findViewById(R.id.imageViewAnimal);
+        imageViewAnimal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(QuizzActivity.this);
+                String identifier = image.substring(0, image.lastIndexOf("."));
+                View dialogView = LayoutInflater.from(QuizzActivity.this).inflate(R.layout.image_layout,null);
+                ImageView iv = dialogView.findViewById(R.id.imageView4);
+                iv.setImageResource(getResources().getIdentifier(identifier, "drawable", getPackageName()));
+                mBuilder.setView(dialogView);
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+            }
+        });
 
         assert image != null;
         ImageView imageView = findViewById(R.id.imageViewAnimal);
@@ -137,6 +156,11 @@ public class QuizzActivity extends AppCompatActivity implements View.OnClickList
                     }
                     buttonNextQuestion.setVisibility(View.VISIBLE);
                     buttonValidNext.setVisibility(View.INVISIBLE);
+                    if(counter == 2) {
+                        buttonNextQuestion.setText("VOIR LES RESULTATS");
+                    } else {
+                        buttonNextQuestion.setText("QUESTION SUIVANTE");
+                    }
                 }
             }
         });
@@ -156,6 +180,7 @@ public class QuizzActivity extends AppCompatActivity implements View.OnClickList
                     startActivity(intent);
                     finish();
                 } else if (counter == numberQuestions - 1) {
+                    buttonNextQuestion.setText("VOIR LES RESULTATS");
                     final Intent intent = new Intent(QuizzActivity.this, ResultsActivity.class);
                     intent.putExtra("counter", counter);
                     intent.putExtra("numberQuestions", medias.size());

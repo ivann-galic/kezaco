@@ -2,10 +2,13 @@ package com.ivann.kezaco;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +24,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,38 +33,54 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    //
     String[] listItems;
+    MediaAdapter adapter;
+    List<Media> medias;
+    private JSONArray jsonArrayAdapt = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listItems = getResources().getStringArray(R.array.shopping_item);
-        Button choiceButton = (Button) findViewById(R.id.buttonChooseQuizz);
-//      final TextView mResult = (TextView) findViewById(R.id.tvResult);
-        choiceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                mBuilder.setTitle("Quel est l'âge de votre enfant?");
-                mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ListView lw = ((AlertDialog) dialogInterface).getListView();
-                        int checkedItemPosition = lw.getCheckedItemPosition();
-                        String difficultyChosen = listItems[checkedItemPosition];
-                        Log.i("tag", "onClick: 00000000000" + difficultyChosen);
-                        getQuizzFromApi(checkedItemPosition, difficultyChosen);
-                        dialogInterface.dismiss();
-                    }
-                });
-                AlertDialog mDialog = mBuilder.create();
-                mDialog.show();
+       medias = new ArrayList<>();
+        for (int i = 0; i < jsonArrayAdapt.length(); i++) {
+
+        }
+
+
+
+        Button buttonList = (Button) findViewById(R.id.buttonRecycle);
+        buttonList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getQuizzFromApi(-1,"slip de bain",quizzList.class);
+
+
             }
         });
 
+        listItems = getResources().getStringArray(R.array.shopping_item);
+        Button choiceButton = (Button) findViewById(R.id.buttonChooseQuizz);
+        choiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+            mBuilder.setTitle("Quel est l'âge de votre enfant?");
+            mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ListView lw = ((AlertDialog) dialogInterface).getListView();
+                    int checkedItemPosition = lw.getCheckedItemPosition();
+                    String difficultyChosen = listItems[checkedItemPosition];
+                    getQuizzFromApi(checkedItemPosition, difficultyChosen, QuizzActivity.class);
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog mDialog = mBuilder.create();
+            mDialog.show();
+            }
+        });
         findViewById(R.id.buttonAbout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,9 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void getQuizzFromApi(int userChoice, final String difficultyChosen) {
-
-
+    private void getQuizzFromApi(int userChoice, final String difficultyChosen, final Class destinationActivity) {
         String url = urlFromUserChoice(userChoice);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -87,14 +105,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String body = response.body().string();
-                //Log.i("MainActivity","response=" + body);
                 try {
-
                     JSONArray jsonArray = new JSONArray(body);
-
-                    // Collections.shuffle(jsonArray);
                     ArrayList<Media> list = new ArrayList<>();
-
                     int len = jsonArray.length();
 
                     for (int i = 0; i < len; i++) {
@@ -105,24 +118,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         JSONArray answer = jsonObject.getJSONArray("answers");
                             for (int j = 0; j < answer.length(); j++) {
                                 Log.i("MainActivity", "longueur liste ?" + answer.length());
-
                                 JSONObject answerJSONObject = answer.getJSONObject(j);
                                 Answer answer1 = new Answer(answerJSONObject.getString("sentence"), answerJSONObject.getBoolean("is_right"));
                                 Log.i("MainActivity", "affiche liste ?" + answer1);
-
                                 answerList.add(answer1);
                             }
                             list.add(new Media(mediaAttribute, theme, answerList));
+                        medias.add(new Media(mediaAttribute, theme, answerList));
 
                     }
+
                     Collections.shuffle(list);
-                    Intent intent = new Intent(MainActivity.this, QuizzActivity.class);
+                    Intent intent = new Intent(MainActivity.this, destinationActivity);
                     intent.putExtra("difficultyChosen", difficultyChosen);
                     intent.putExtra("listOjectJson", list);
+                    //intent.putExtra("medias",  medias);
                     startActivity(intent);
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                     e.getMessage();
@@ -153,6 +164,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String urlFromUserChoice(int userChoice) {
         String theme;
         switch (userChoice) {
+            case -1:
+                theme = "";
             case 0:
                 theme = "sound";
                 break;
@@ -161,20 +174,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 2:
                 theme = "shadow";
-
                 break;
-
             default:
                 theme = "sound";
                 break;
         }
-        return "http://gryt.tech:8080/kezacos/?theme=" + theme;
+
+        String queryParam = "";
+        if (!theme.isEmpty()) {
+            queryParam = "?theme=" + theme;
+        }
+        return "http://gryt.tech:8080/kezacos/" + queryParam;
     }
 
     private void goToAbout() {
         final Intent intentAbout = new Intent(this, AboutActivity.class);
         startActivity(intentAbout);
     }
+
+
 
     @Override
     public void onClick(View v) {
