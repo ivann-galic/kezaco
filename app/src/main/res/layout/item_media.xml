@@ -16,7 +16,7 @@
         app:layout_constraintVertical_bias="0.062"
         app:srcCompat="@drawable/dolphin" />
 
-    <RadioGroup
+    <TextView
         android:id="@+id/TextViewAnswersContainer"
         android:layout_width="100dp"
         android:layout_height="60dp"

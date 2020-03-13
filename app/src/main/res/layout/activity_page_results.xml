@@ -6,55 +6,73 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="83dp"
-        android:layout_marginBottom="629dp"
-        android:textColor="#1b1b1b"
-        android:textSize="17sp"
-        android:text="Bravo, la partie est terminée !"
-        android:textAlignment="center"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardSentences"
+        android:layout_width="314dp"
+        android:layout_height="474dp"
+        android:backgroundTint="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/TextViewWinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:textColor="#1b1b1b"
-        android:textSize="17sp"
-        android:text="Tu as réussi(e) à :"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/TextViewPercentWin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textColor="#1b1b1b"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewWinner" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="83dp"
+                android:layout_marginBottom="629dp"
+                android:text="Bravo, la partie est terminée !"
+                android:textAlignment="center"
+                android:textColor="#1b1b1b"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textViewDifficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="TextView"
-        android:textColor="#1b1b1b"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewPercentWin" />
+            <TextView
+                android:id="@+id/TextViewWinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:text="Tu as réussi(e) à :"
+                android:textColor="#1b1b1b"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/TextViewPercentWin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textColor="#1b1b1b"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextViewWinner" />
+
+            <TextView
+                android:id="@+id/textViewDifficulty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="TextView"
+                android:textColor="#1b1b1b"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextViewPercentWin" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,7 +35,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     String[] listItems;
     MediaAdapter adapter;
-    List<Media> medias;
+    ArrayList<Media> medias;
     private JSONArray jsonArrayAdapt = new JSONArray();
 
     @Override
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent intent = new Intent(MainActivity.this, destinationActivity);
                     intent.putExtra("difficultyChosen", difficultyChosen);
                     intent.putExtra("listOjectJson", list);
-                    //intent.putExtra("medias",  medias);
+                    intent.putExtra("medias",  medias);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -23,7 +23,6 @@ import java.util.Collections;
 
 public class QuizzActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     private static final String TAG = "QuizzActivity";
     private int nbOfGoodAnswers;
     private int counter;
@@ -50,7 +49,7 @@ public class QuizzActivity extends AppCompatActivity implements View.OnClickList
         final TextView textViewGoodSentence = findViewById(R.id.textViewGoodSentence);
 
         int index = counter;
-        assert medias != null;
+        //assert medias != null;
 
         final Media media = (Media) medias.get(index);
         final String image = media.media;
@@ -79,12 +78,12 @@ public class QuizzActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        assert image != null;
+        //assert image != null;
         ImageView imageView = findViewById(R.id.imageViewAnimal);
         String identifier = image.substring(0, image.lastIndexOf("."));
         imageViewAnimal.setImageResource(getResources().getIdentifier(identifier, "drawable", getPackageName()));
 
-        assert media.theme != null;
+       // assert media.theme != null;
         if (media.theme.equals("picture") || media.theme.equals("shadow")) {
             findViewById(R.id.imageViewAnimal).setVisibility(View.VISIBLE);
             findViewById(R.id.buttonSound).setVisibility(View.INVISIBLE);
