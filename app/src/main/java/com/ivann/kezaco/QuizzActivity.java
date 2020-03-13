@@ -58,7 +58,6 @@ public class QuizzActivity extends AppCompatActivity implements View.OnClickList
         final String theme = media.theme;
         ArrayList answer = media.answers;
 
-
         //medias.get(0);
 
         final RadioGroup group = (RadioGroup) findViewById(R.id.radioGroupQuest);
