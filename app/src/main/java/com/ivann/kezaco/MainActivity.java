@@ -36,9 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         listItems = getResources().getStringArray(R.array.shopping_item);
-
         Button choiceButton = (Button) findViewById(R.id.buttonChooseQuizz);
 //      final TextView mResult = (TextView) findViewById(R.id.tvResult);
         choiceButton.setOnClickListener(new View.OnClickListener() {
@@ -50,11 +48,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-//      mResult.setText(listItems[i]);
                         ListView lw = ((AlertDialog) dialogInterface).getListView();
                         int checkedItemPosition = lw.getCheckedItemPosition();
-                        Log.i("MainActivity", "onClick: " + checkedItemPosition);
-                        getQuizzFromApi(checkedItemPosition);
+                        String difficultyChosen = listItems[checkedItemPosition];
+                        Log.i("tag", "onClick: 00000000000" + difficultyChosen);
+                        getQuizzFromApi(checkedItemPosition, difficultyChosen);
                         dialogInterface.dismiss();
                     }
                 });
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void getQuizzFromApi(int userChoice) {
+    private void getQuizzFromApi(int userChoice, final String difficultyChosen) {
 
 
         String url = urlFromUserChoice(userChoice);
@@ -119,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     Collections.shuffle(list);
                     Intent intent = new Intent(MainActivity.this, QuizzActivity.class);
+                    intent.putExtra("difficultyChosen", difficultyChosen);
                     intent.putExtra("listOjectJson", list);
                     startActivity(intent);
 
@@ -175,12 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void goToAbout() {
         final Intent intentAbout = new Intent(this, AboutActivity.class);
         startActivity(intentAbout);
-    }
-
-    private void goToQuizz() {
-        final Intent intentQuizz = new Intent(this, QuizzActivity.class);
-        startActivity(intentQuizz);
-
     }
 
     @Override
